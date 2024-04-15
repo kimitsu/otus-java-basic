@@ -1,5 +1,9 @@
 package ru.otus.java.basic.hw2;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Optional;
+
 public class MainApplication {
     public static void printNumberAndString(int number, String string) {
         for (int i = 0; i < number; i++) {
@@ -50,6 +54,23 @@ public class MainApplication {
         }
     }
 
+    public static int[] getArraySum(int[]... arrays) {
+        // Получаем максимальную длину массива (пробуем функциональный паттерн)
+        Optional<Integer> arraySize = Arrays.stream(arrays).map(array -> array.length).max(Integer::compare);
+        if (arraySize.isPresent()) {
+            int[] result = new int[arraySize.get()]; // при инициализации заполняется нулями
+            for (int[] array : arrays) {
+                for (int i = 0; i < array.length; i++) {
+                    result[i] += array[i];
+                }
+            }
+            return result;
+        } else {
+            // Нет входящих массивов
+            return new int[0];
+        }
+    }
+
     public static void main(String[] args) {
         printNumberAndString(5, "Hello...");
         printSumOfElementsGreaterThanFive(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}); // Must print 40
@@ -59,5 +80,14 @@ public class MainApplication {
         incrementArray(testArray, 10);
         printSumOfElementsGreaterThanFive(testArray); // Must print 200
         printCompareSumOfArrayHalves(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+        System.out.println(
+                Arrays.toString(
+                        getArraySum(
+                                new int[]{1, 2, 3},
+                                new int[]{2, 2},
+                                new int[]{1, 1, 1, 1, 1}
+                        )
+                )
+        );
     }
 }
