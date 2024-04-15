@@ -76,10 +76,11 @@ public class MainApplication {
         printSumOfElementsGreaterThanFive(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}); // Must print 40
         int[] testArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         fillArray(testArray, 10);
-        printSumOfElementsGreaterThanFive(testArray); // Must print 100
+        System.out.println(Arrays.toString(testArray));
+        testArray = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         incrementArray(testArray, 10);
-        printSumOfElementsGreaterThanFive(testArray); // Must print 200
-        printCompareSumOfArrayHalves(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+        System.out.println(Arrays.toString(testArray));
+        printCompareSumOfArrayHalves(testArray);
         System.out.println(
                 Arrays.toString(
                         getArraySum(
