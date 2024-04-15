@@ -5,12 +5,21 @@ import java.util.Optional;
 import java.util.OptionalInt;
 
 public class MainApplication {
+    /**
+     * Печатает строку несколько раз
+     * @param number количество раз
+     * @param string строка, которую печатать
+     */
     public static void printNumberAndString(int number, String string) {
         for (int i = 0; i < number; i++) {
             System.out.println(string);
         }
     }
 
+    /**
+     * Печатает сумму элементов массива, которые больше 5
+     * @param array входящий массив
+     */
     public static void printSumOfElementsGreaterThanFive(int[] array) {
         long result = 0;
         for (int i = 0; i < array.length; i++) {
@@ -21,18 +30,33 @@ public class MainApplication {
         System.out.println(result);
     }
 
+    /**
+     * Заполняет массив указанным значением
+     * @param array массив, который необходимо заполнить
+     * @param value значение, которым необходимо заполнить массив
+     */
     public static void fillArray(int[] array, int value) {
         for (int i = 0; i < array.length; i++) {
             array[i] = value;
         }
     }
 
+    /**
+     * Увеличивает элементы массива на указанное значение
+     * @param array массив, элементы которого необходимо увеличить
+     * @param value значение, на которое необходимо увеличить элементы массива
+     */
     public static void incrementArray(int[] array, int value) {
         for (int i = 0; i < array.length; i++) {
             array[i] += value;
         }
     }
 
+    /**
+     * Печатает в консоль информацию о том, сумма элементов какой из половин входящего массива больше.
+     * Половинами массива считаются его элементы [0..length/2-1] и [length/2..length-1]
+     * @param array входящий массив
+     */
     public static void printCompareSumOfArrayHalves(int[] array) {
         if (array.length < 2) {
             System.out.println("Ваш массив слишком мал");
@@ -54,6 +78,12 @@ public class MainApplication {
         }
     }
 
+    /**
+     * Суммирует соответствующие элементы из нескольких массивов
+     * @param arrays перечень входящих массивов
+     * @return массив длинной наибольшего из входящих массивов, каждый элемент которого
+     * это сумма соответствующих элементов входящих массивов
+     */
     public static int[] getArraySum(int[]... arrays) {
         // Получаем максимальную длину массива (пробуем функциональный паттерн)
         Optional<Integer> arraySize = Arrays.stream(arrays).map(array -> array.length).max(Integer::compare);
@@ -92,6 +122,13 @@ public class MainApplication {
         return OptionalInt.empty();
     }
 
+    /**
+     * Проверяет, упорядочен ли массив
+     * @param array Входящий массив
+     * @param ascending true - по возрастанию, false - по убыванию
+     * @param strict true - строго, false - нестрого
+     * @return true - если упорядочем в указанном направлении с указанной строгостью, false - в противном случае
+     */
     public static boolean isOrdered(int[] array, boolean ascending, boolean strict) {
         // Для быстродействия лучше, видимо, продублировать циклы, чтобы не повторять проверки в цикле
         if (ascending && strict) {
@@ -114,11 +151,27 @@ public class MainApplication {
         return true;
     }
 
+    /**
+     * Разворачивает массив
+     * @param array массив, который необходимо развернуть
+     */
+    public static void reverseArray(int[] array) {
+        for (int i = 0; i < array.length / 2; i++) {
+            int temp = array[i];
+            array[i] = array[array.length - i - 1];
+            array[array.length - i - 1] = temp;
+        }
+    }
+
+    /**
+     * Простейший тестовый прогон методов
+     * @param args не используется
+     */
     public static void main(String[] args) {
 
         printNumberAndString(5, "Hello...");
 
-        printSumOfElementsGreaterThanFive(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}); // Must print 40
+        printSumOfElementsGreaterThanFive(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}); // 40
 
         int[] testArray = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
         fillArray(testArray, 10);
@@ -143,6 +196,10 @@ public class MainApplication {
         System.out.println(getBalancePoint(new int[]{1, 5, 3, 4, -1}));
 
         System.out.println(isOrdered(new int[]{1, 2, 3, 4, 5}, true, true));
+
+        testArray = new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+        reverseArray(testArray);
+        System.out.println(Arrays.toString(testArray));
 
     }
 }
