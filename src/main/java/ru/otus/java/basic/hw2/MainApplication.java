@@ -7,6 +7,7 @@ import java.util.OptionalInt;
 public class MainApplication {
     /**
      * Печатает строку несколько раз
+     *
      * @param number количество раз
      * @param string строка, которую печатать
      */
@@ -18,6 +19,7 @@ public class MainApplication {
 
     /**
      * Печатает сумму элементов массива, которые больше 5
+     *
      * @param array входящий массив
      */
     public static void printSumOfElementsGreaterThanFive(int[] array) {
@@ -32,6 +34,7 @@ public class MainApplication {
 
     /**
      * Заполняет массив указанным значением
+     *
      * @param array массив, который необходимо заполнить
      * @param value значение, которым необходимо заполнить массив
      */
@@ -43,6 +46,7 @@ public class MainApplication {
 
     /**
      * Увеличивает элементы массива на указанное значение
+     *
      * @param array массив, элементы которого необходимо увеличить
      * @param value значение, на которое необходимо увеличить элементы массива
      */
@@ -55,6 +59,7 @@ public class MainApplication {
     /**
      * Печатает в консоль информацию о том, сумма элементов какой из половин входящего массива больше.
      * Половинами массива считаются его элементы [0..length/2-1] и [length/2..length-1]
+     *
      * @param array входящий массив
      */
     public static void printCompareSumOfArrayHalves(int[] array) {
@@ -80,6 +85,7 @@ public class MainApplication {
 
     /**
      * Суммирует соответствующие элементы из нескольких массивов
+     *
      * @param arrays перечень входящих массивов
      * @return массив длинной наибольшего из входящих массивов, каждый элемент которого
      * это сумма соответствующих элементов входящих массивов
@@ -124,9 +130,10 @@ public class MainApplication {
 
     /**
      * Проверяет, упорядочен ли массив
-     * @param array Входящий массив
+     *
+     * @param array     Входящий массив
      * @param ascending true - по возрастанию, false - по убыванию
-     * @param strict true - строго, false - нестрого
+     * @param strict    true - строго, false - нестрого
      * @return true - если упорядочем в указанном направлении с указанной строгостью, false - в противном случае
      */
     public static boolean isOrdered(int[] array, boolean ascending, boolean strict) {
@@ -153,6 +160,7 @@ public class MainApplication {
 
     /**
      * Разворачивает массив
+     *
      * @param array массив, который необходимо развернуть
      */
     public static void reverseArray(int[] array) {
@@ -165,6 +173,7 @@ public class MainApplication {
 
     /**
      * Простейший тестовый прогон методов
+     *
      * @param args не используется
      */
     public static void main(String[] args) {
