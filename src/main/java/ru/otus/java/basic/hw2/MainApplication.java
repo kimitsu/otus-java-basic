@@ -3,6 +3,7 @@ package ru.otus.java.basic.hw2;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public class MainApplication {
     public static void printNumberAndString(int number, String string) {
@@ -47,8 +48,8 @@ public class MainApplication {
             System.out.printf("Сумма элементов [0..%d] %s элементов [%d..%d]%n",
                     array.length / 2 - 1,
                     result > 0 ? "больше, чем сумма"
-                               : (result < 0 ? "меньше, чем сумма"
-                                             : "равна сумме"),
+                            : (result < 0 ? "меньше, чем сумма"
+                            : "равна сумме"),
                     array.length / 2,
                     array.length - 1);
         }
@@ -71,6 +72,27 @@ public class MainApplication {
         }
     }
 
+    /**
+     * Находит первую "точку равновесия" массива, находящуюся между двумя соседними элементами массива,
+     * суммы элементов массива по обе стороны от которой равны друг другу.
+     *
+     * @param array Входящий массив
+     * @return OptionalInt, содержащий значение индекса первого из двух элементов массива,
+     * между которыми располагается точка равновесия, если таковая имеется, или пустой в противном случае.
+     */
+    public static OptionalInt getBalancePoint(int[] array) {
+        int sumRight = Arrays.stream(array).sum();
+        int sumLeft = 0;
+        for (int i = 0; i < array.length - 1; i++) {
+            sumLeft += array[i];
+            sumRight -= array[i];
+            if (sumLeft == sumRight) {
+                return OptionalInt.of(i);
+            }
+        }
+        return OptionalInt.empty();
+    }
+
     public static void main(String[] args) {
         printNumberAndString(5, "Hello...");
         printSumOfElementsGreaterThanFive(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10}); // Must print 40
@@ -90,5 +112,6 @@ public class MainApplication {
                         )
                 )
         );
+        System.out.println(getBalancePoint(new int[]{1, 5, 3, 4, -1}));
     }
 }
