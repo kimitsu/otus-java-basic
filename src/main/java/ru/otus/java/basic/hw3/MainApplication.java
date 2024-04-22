@@ -1,6 +1,8 @@
 package ru.otus.java.basic.hw3;
 
 import java.util.Arrays;
+import java.util.OptionalInt;
+import java.util.OptionalLong;
 
 public class MainApplication {
     /**
@@ -54,6 +56,25 @@ public class MainApplication {
         }
     }
 
+    /**
+     * Возвращает OptionalInt, содержащий максимальный элемент двумерного массива, если таковой имеется,
+     * или OptionalInt.empty() в противном случае (если массив пустой)
+     *
+     * @param array Входящий массив
+     * @return OptionalInt со значением максимального элемента входящего массива, или пустой, если входящий массив пуст
+     */
+    public static OptionalInt findMax(int[][] array) {
+        OptionalInt result = OptionalInt.empty();
+        for (int[] row : array) {
+            for (int item : row) {
+                if (result.isEmpty() || item > result.getAsInt()) {
+                    result = OptionalInt.of(item);
+                }
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
 
         System.out.println(sumOfPositiveElements(new int[][]{{0, 1, 2, 3}, {-1, -2, 3}, {}, {10, 20, 30, -40}}));
@@ -63,6 +84,8 @@ public class MainApplication {
         int[][] testArray = {{1, 2, 3}, {4, 5, 6, 7}, {}, {8, 9, 10, 11}, {12, 13, 14, 15, 16, 17}};
         zeroDiagonal(testArray);
         Arrays.stream(testArray).forEach(x -> System.out.println(Arrays.toString(x)));
+
+        System.out.println("findMax(testArray) = " + findMax(testArray));
 
     }
 
