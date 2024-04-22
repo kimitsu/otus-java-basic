@@ -1,11 +1,13 @@
 package ru.otus.java.basic.hw3;
 
+import java.util.Arrays;
+
 public class MainApplication {
     /**
      * Возвращает сумму положительных элементов двумерного целочисленного массива
      *
-     * @param array Входной массив
-     * @return Сумма положительных элементов входного массива
+     * @param array Входящий массив
+     * @return Сумма положительных элементов входящего массива
      */
     public static long sumOfPositiveElements(int[][] array) {
         long result = 0;
@@ -38,11 +40,29 @@ public class MainApplication {
         }
     }
 
+    /**
+     * Зануляет диагональные элементы двумерного массива
+     * Диагональными считаются элементы, у которых совпадает индекс в обоих измерениях
+     *
+     * @param array Входящий массив
+     */
+    public static void zeroDiagonal(int[][] array) {
+        for (int i = 0; i < array.length; i++) {
+            if (i < array[i].length) {
+                array[i][i] = 0;
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         System.out.println(sumOfPositiveElements(new int[][]{{0, 1, 2, 3}, {-1, -2, 3}, {}, {10, 20, 30, -40}}));
 
         printSquare(10);
+
+        int[][] testArray = {{1, 2, 3}, {4, 5, 6, 7}, {}, {8, 9, 10, 11}, {12, 13, 14, 15, 16, 17}};
+        zeroDiagonal(testArray);
+        Arrays.stream(testArray).forEach(x -> System.out.println(Arrays.toString(x)));
 
     }
 
