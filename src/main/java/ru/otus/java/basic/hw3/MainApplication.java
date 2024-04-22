@@ -2,7 +2,6 @@ package ru.otus.java.basic.hw3;
 
 import java.util.Arrays;
 import java.util.OptionalInt;
-import java.util.OptionalLong;
 
 public class MainApplication {
     /**
@@ -75,6 +74,16 @@ public class MainApplication {
         return result;
     }
 
+    /**
+     * Возвращает сумму элементов второй строки массива
+     *
+     * @param array Входящий массив
+     * @return Сумма элементов второй строки входящего массива, или -1, если второй строки не существует
+     */
+    public static long sumOfElementsOfSecondRow(int[][] array) {
+        return array.length >= 2 && array[1] != null ? Arrays.stream(array[1]).sum() : -1;
+    }
+
     public static void main(String[] args) {
 
         System.out.println(sumOfPositiveElements(new int[][]{{0, 1, 2, 3}, {-1, -2, 3}, {}, {10, 20, 30, -40}}));
@@ -86,6 +95,8 @@ public class MainApplication {
         Arrays.stream(testArray).forEach(x -> System.out.println(Arrays.toString(x)));
 
         System.out.println("findMax(testArray) = " + findMax(testArray));
+
+        System.out.println("sumOfElementsOfSecondRow(testArray) = " + sumOfElementsOfSecondRow(testArray));
 
     }
 
