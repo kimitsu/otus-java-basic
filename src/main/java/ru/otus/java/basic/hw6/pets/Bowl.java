@@ -32,7 +32,7 @@ public class Bowl {
                 Double.isNaN(foodToAdd)) {
             throw new IllegalArgumentException();
         }
-        System.out.printf("Adding %f units of food to the bowl.", foodAmount);
+        System.out.printf("Adding %f units of food to the bowl.", foodToAdd);
         if (foodAmount + foodToAdd > foodCapacity) {
             System.out.printf(" %f units of food is spilled on the floor and eaten by mice.", foodAmount - foodCapacity + foodToAdd);
             foodAmount = foodCapacity;
