@@ -12,7 +12,7 @@ public class Cat {
      *
      * @param name     name of the cat
      * @param appetite amount of food the cat needs to eat per feeding session
-     * @throws IllegalArgumentException when name is null or appetite is negative, infinite or not a number
+     * @throws IllegalArgumentException if name is null or appetite is negative, infinite or not a number
      */
     public Cat(String name, double appetite) throws IllegalArgumentException {
         if (name == null || appetite < 0 || Double.isInfinite(appetite) || Double.isNaN(appetite)) {
@@ -29,7 +29,7 @@ public class Cat {
      *
      * @param bowl the bowl to feed the cat from
      * @return true if successful, false if already fed or if the amount of food in the bowl is insufficient
-     * @throws IllegalArgumentException when the bowl is null
+     * @throws IllegalArgumentException if bowl is null
      */
     public boolean feed(Bowl bowl) throws IllegalArgumentException {
         if (bowl == null) {
