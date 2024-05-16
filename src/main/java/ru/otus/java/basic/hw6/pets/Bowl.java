@@ -39,7 +39,7 @@ public class Bowl {
         } else {
             foodAmount += foodToAdd;
         }
-        System.out.printf(" The bowl now contains %f units of food.\n", this.foodAmount);
+        System.out.printf(" The bowl now contains %f units of food.\n", foodAmount);
     }
 
     /**
@@ -56,13 +56,13 @@ public class Bowl {
                 Double.isNaN(foodToTake)) {
             throw new IllegalArgumentException();
         }
-        System.out.printf("Taking %f units of food out of the bowl.", foodAmount);
+        System.out.printf("Taking %f units of food out of the bowl.", foodToTake);
         if (foodAmount < foodToTake) {
             System.out.printf(" Failure due to insufficient food.\n");
             return false;
         }
         foodAmount -= foodToTake;
-        System.out.printf(" Success, the bowl now contains %f food.\n", this.foodAmount);
+        System.out.printf(" Success, the bowl now contains %f food.\n", foodAmount);
         return true;
     }
 }
