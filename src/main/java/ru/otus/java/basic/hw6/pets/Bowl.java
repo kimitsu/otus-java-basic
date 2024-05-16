@@ -34,7 +34,7 @@ public class Bowl {
         }
         System.out.printf("Adding %f units of food to the bowl.", foodAmount);
         if (foodAmount + foodToAdd > foodCapacity) {
-            System.out.printf(" %f units of food is spilled on the floor and eaten by mice.", this.foodAmount - foodCapacity);
+            System.out.printf(" %f units of food is spilled on the floor and eaten by mice.", foodAmount - foodCapacity + foodToAdd);
             foodAmount = foodCapacity;
         } else {
             foodAmount += foodToAdd;
