@@ -3,9 +3,9 @@ package ru.otus.java.basic.hw6.pets;
 import ru.otus.java.basic.hw6.pets.Bowl;
 
 public class Cat {
-    final String name;
-    final double appetite;
-    boolean isFed;
+    private final String name;
+    private final double appetite;
+    private boolean isFed;
 
     /**
      * Creates a hungry cat
@@ -16,7 +16,7 @@ public class Cat {
     public Cat(String name, double appetite) {
         this.name = name;
         this.appetite = appetite;
-        isFed = false;
+        this.isFed = false;
     }
 
     /**
@@ -25,8 +25,12 @@ public class Cat {
      *
      * @param bowl the bowl to feed the cat from
      * @return true if successful, false if already fed or if the amount of food in the bowl is insufficient
+     * @throws IllegalArgumentException when the bowl is null
      */
-    public boolean feed(Bowl bowl) {
+    public boolean feed(Bowl bowl) throws IllegalArgumentException {
+        if (bowl == null) {
+            throw new IllegalArgumentException();
+        }
         if (isFed) {
             System.out.printf("%s approaches the bowl with disinterest. It is already fed.\n", name);
             return false;
