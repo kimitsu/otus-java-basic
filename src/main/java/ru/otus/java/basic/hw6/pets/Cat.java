@@ -12,8 +12,12 @@ public class Cat {
      *
      * @param name     name of the cat
      * @param appetite amount of food the cat needs to eat per feeding session
+     * @throws IllegalArgumentException when name is null or appetite is negative, infinite or not a number
      */
-    public Cat(String name, double appetite) {
+    public Cat(String name, double appetite) throws IllegalArgumentException {
+        if (name == null || appetite < 0 || Double.isInfinite(appetite) || Double.isNaN(appetite)) {
+            throw new IllegalArgumentException();
+        }
         this.name = name;
         this.appetite = appetite;
         this.isFed = false;
