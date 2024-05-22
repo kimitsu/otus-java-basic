@@ -1,7 +1,5 @@
 package ru.otus.java.basic.hw7.transport;
 
-import ru.otus.java.basic.hw7.transport.*;
-
 public class Human extends Animal implements Rider {
     private Transport currentTransport;
 

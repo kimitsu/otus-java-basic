@@ -14,7 +14,7 @@ public abstract class MotorVehicle implements Transport {
      * @param fuelAmount      current fuel amount
      * @param fuelPerDistance units of fuel consumed per unit of distance on normal terrain
      */
-    public MotorVehicle(String model, double fuelCapacity, double fuelAmount, double fuelPerDistance) {
+    protected MotorVehicle(String model, double fuelCapacity, double fuelAmount, double fuelPerDistance) {
         if (model == null) {
             throw new IllegalArgumentException("Illegal model");
         }
