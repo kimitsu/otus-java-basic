@@ -1,6 +1,6 @@
 package ru.otus.java.basic.hw7.transport;
 
-public class OffroadVehicle extends MotorVehicle {
+public class OffRoadVehicle extends MotorVehicle {
     /**
      * Create an off-road vehicle
      *
@@ -9,7 +9,7 @@ public class OffroadVehicle extends MotorVehicle {
      * @param fuelAmount      current fuel amount, non-negative
      * @param fuelPerDistance units of fuel consumed per fuel of distance on normal terrain, non-negative
      */
-    public OffroadVehicle(String model, double fuelCapacity, double fuelAmount, double fuelPerDistance) {
+    public OffRoadVehicle(String model, double fuelCapacity, double fuelAmount, double fuelPerDistance) {
         super(model, fuelCapacity, fuelAmount, fuelPerDistance);
     }
 

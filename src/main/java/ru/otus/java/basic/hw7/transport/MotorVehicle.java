@@ -13,7 +13,6 @@ public abstract class MotorVehicle implements Transport {
      * @param fuelCapacity    fuel tank capacity
      * @param fuelAmount      current fuel amount
      * @param fuelPerDistance units of fuel consumed per unit of distance on normal terrain
-     * @throws IllegalArgumentException when fuelCapacity, fuelAmount, fuelPerDistance are negative or infinite numbers
      */
     public MotorVehicle(String model, double fuelCapacity, double fuelAmount, double fuelPerDistance) {
         if (model == null) {
@@ -46,11 +45,11 @@ public abstract class MotorVehicle implements Transport {
         }
         if (fuelAmount + amount > fuelCapacity) {
             System.out.printf("%s can't be fueled with %f units of fuel," +
-                    " there's not enough space in the fuel tank.\n", model, amount);
+                    " there's not enough space in the fuel tank.%n", model, amount);
             return false;
         }
         fuelAmount += amount;
-        System.out.printf("%s is refueled with %f units of fuel, there is now %f units in the fuel tank.\n",
+        System.out.printf("%s is refueled with %f units of fuel, there is now %f units in the fuel tank.%n",
                 model, amount, fuelAmount);
         return true;
     }
@@ -62,6 +61,7 @@ public abstract class MotorVehicle implements Transport {
      * @param terrain  terrain to travel over
      * @return true if the travel is successful, false if the travel is cancelled due to insufficient fuel
      */
+    @Override
     public boolean travel(double distance, Terrain terrain) {
         if (terrain == null) {
             throw new IllegalArgumentException("Illegal terrain");
@@ -69,14 +69,14 @@ public abstract class MotorVehicle implements Transport {
         if (distance < 0 || !Double.isFinite(distance)) {
             throw new IllegalArgumentException("Illegal distance");
         }
-        System.out.printf("%s travels through the %s for %f units of distance.\n", model, terrain.getName(), distance);
+        System.out.printf("%s travels through the %s for %f units of distance.%n", model, terrain.getName(), distance);
         double fuelRequired = distance * terrain.getDifficulty() * fuelPerDistance;
         if (fuelRequired > fuelAmount) {
-            System.out.printf("%s has insufficient fuel, so the trip is canceled.\n", model);
+            System.out.printf("%s has insufficient fuel, so the trip is canceled.%n", model);
             return false;
         }
         fuelAmount -= fuelRequired;
-        System.out.printf("%s expends %f units of fuel and is left with %f units.\n", model, fuelRequired, fuelAmount);
+        System.out.printf("%s expends %f units of fuel and is left with %f units.%n", model, fuelRequired, fuelAmount);
         return true;
     }
 
@@ -94,6 +94,7 @@ public abstract class MotorVehicle implements Transport {
      *
      * @return name of the model
      */
+    @Override
     public String getName() {
         return getModel();
     }

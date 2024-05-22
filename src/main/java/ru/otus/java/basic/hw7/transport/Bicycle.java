@@ -34,12 +34,12 @@ public class Bicycle implements Transport {
             throw new IllegalStateException("Someone must ride the bicycle for it to travel");
         }
         if (terrain == Terrain.SWAMP) {
-            System.out.printf("Bicycle can't travel through %s, so the trip is canceled.\n", terrain.getName());
+            System.out.printf("Bicycle can't travel through %s, so the trip is canceled.%n", terrain.getName());
             return false;
         }
         double exertedStress = distance * terrain.getDifficulty() * endurancePerDistance;
         System.out.printf("%s travels on a bicycle through the %s for %f units of distance," +
-                        " which exerts %f units of stress on the rider.\n",
+                        " which exerts %f units of stress on the rider.%n",
                 currentRider.getName(), terrain.getName(), distance, exertedStress);
         return currentRider.exertStress(exertedStress);
     }

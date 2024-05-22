@@ -24,7 +24,7 @@ public class Horse extends Animal implements Transport {
     @Override
     public boolean travel(double distance, Terrain terrain) {
         if (terrain == Terrain.SWAMP) {
-            System.out.printf("%s can't travel through %s, so the trip is canceled.\n", getName(), terrain.getName());
+            System.out.printf("%s can't travel through %s, so the trip is canceled.%n", getName(), terrain.getName());
             return false;
         }
         return super.travel(distance, terrain);

@@ -1,6 +1,6 @@
 package ru.otus.java.basic.hw7.transport;
 
-public class Animal implements Traveller {
+public class Animal implements Transport {
     private final String name;
     private final double enduranceCapacity;
     private double enduranceAmount;
@@ -38,7 +38,7 @@ public class Animal implements Traveller {
      */
     public void rest() {
         enduranceAmount = enduranceCapacity;
-        System.out.printf("%s have rested, their endurance recovered up to %f.\n", name, enduranceAmount);
+        System.out.printf("%s have rested, their endurance recovered up to %f.%n", name, enduranceAmount);
     }
 
     /**
@@ -48,6 +48,7 @@ public class Animal implements Traveller {
      * @param terrain  terrain to travel over
      * @return true if the travel is successful, false if the travel is cancelled due to insufficient endurance
      */
+    @Override
     public boolean travel(double distance, Terrain terrain) {
         if (terrain == null) {
             throw new IllegalArgumentException("Illegal terrain");
@@ -56,7 +57,7 @@ public class Animal implements Traveller {
             throw new IllegalArgumentException("Illegal distance");
         }
         double enduranceRequired = distance * terrain.getDifficulty() * endurancePerDistance;
-        System.out.printf("%s travels through the %s for %f units of distance.\n", name, terrain.getName(), distance);
+        System.out.printf("%s travels through the %s for %f units of distance.%n", name, terrain.getName(), distance);
         return exertStress(enduranceRequired);
     }
 
@@ -72,11 +73,11 @@ public class Animal implements Traveller {
             throw new IllegalArgumentException("Illegal amount");
         }
         if (amount > enduranceAmount) {
-            System.out.printf("%s can't exert such stress, so the trip is cancelled.\n", name);
+            System.out.printf("%s can't exert such stress, so the trip is cancelled.%n", name);
             return false;
         }
         enduranceAmount -= amount;
-        System.out.printf("%s exerts %f units of stress and is left with %f units of endurance.\n", name, amount, enduranceAmount);
+        System.out.printf("%s exerts %f units of stress and is left with %f units of endurance.%n", name, amount, enduranceAmount);
         return true;
     }
 
@@ -85,6 +86,7 @@ public class Animal implements Traveller {
      *
      * @return animal's name
      */
+    @Override
     public String getName() {
         return name;
     }

@@ -19,7 +19,7 @@ public class MainApplication {
                 new Car("BMW", 100.0, 100.0, 0.2),
                 new Horse("Roach", 100.0, 100.0, 0.5),
                 new Bicycle(0.8),
-                new OffroadVehicle("UAZ", 80.0, 80.0, 0.6),
+                new OffRoadVehicle("UAZ", 80.0, 80.0, 0.6),
                 null
         };
         Terrain[] terrains = Terrain.values();
