@@ -16,7 +16,7 @@ public class EmployeeRoster {
         if (list == null) {
             throw new IllegalArgumentException("list is null");
         }
-        return list.stream().map(employee -> employee == null ? null : employee.getName()).collect(Collectors.toList());
+        return list.stream().map(employee -> employee == null ? null : employee.getName()).toList();
     }
 
     /**
@@ -30,7 +30,7 @@ public class EmployeeRoster {
         if (list == null) {
             throw new IllegalArgumentException("list is null");
         }
-        return list.stream().filter(employee -> employee != null && employee.getAge() >= age).collect(Collectors.toList());
+        return list.stream().filter(employee -> employee != null && employee.getAge() >= age).toList();
     }
 
     /**
@@ -75,7 +75,9 @@ public class EmployeeRoster {
                 new Employee("Petrov", 35),
                 new Employee("Sidoroff", 25)
         );
-        System.out.println("getEmployeeNames(testList) = " + getEmployeeNames(testList));
+        System.out.println("getEmployeeNames(tetList) = " + getEmployeeNames(testList));
+        System.out.println("getEmployeesAsOldAs(testList, 35).stream().map(Employee::getName).collect(Collectors.toList()) = "
+                + getEmployeesAsOldAs(testList, 35).stream().map(Employee::getName).toList());
         System.out.println("isEmployeesAverageAgeGreaterOrEquals(testList, 35) = " + isEmployeesAverageAgeGreaterOrEquals(testList, 35));
         System.out.println("getYoungestEmployee(testList).stream().map(Employee::getName).findAny().orElse(\"Not Found\") = "
                 + getYoungestEmployee(testList).stream().map(Employee::getName).findAny().orElse("Not Found"));
