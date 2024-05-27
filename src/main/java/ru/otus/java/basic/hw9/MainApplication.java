@@ -35,9 +35,7 @@ public class MainApplication {
      * @return sum of integers greater than five
      */
     public static long getSumGreaterThanFive(List<Integer> list) {
-        if (list == null) {
-            throw new IllegalArgumentException("list is null");
-        }
+        Utils.validateNotNull(list, "list");
         return list.stream().filter(value -> value != null && value > 5).reduce(0, Integer::sum);
     }
 
@@ -49,9 +47,7 @@ public class MainApplication {
      * @param <T>   class of the values of the list
      */
     public static <T> void fillElements(List<T> list, T value) {
-        if (list == null) {
-            throw new IllegalArgumentException("list is null");
-        }
+        Utils.validateNotNull(list, "list");
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) != null) {
                 list.set(i, value);
@@ -66,9 +62,7 @@ public class MainApplication {
      * @param value a value to increase the elements of the list by
      */
     public static void increaseElements(List<Integer> list, int value) {
-        if (list == null) {
-            throw new IllegalArgumentException("list is null");
-        }
+        Utils.validateNotNull(list, "list");
         for (int i = 0; i < list.size(); i++) {
             Integer element = list.get(i);
             if (element != null) {
