@@ -25,29 +25,7 @@ public class CalculatorServer {
         try (ServerSocket socket = new ServerSocket(port)) {
             while (true) {
                 System.out.println("Awaiting connection...");
-                try (Socket client = socket.accept()) {
-                    System.out.printf("Client connection from %s%n", client.getInetAddress().getHostAddress());
-                    var reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
-                    var writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
-                    try {
-                        sendOperations(writer);
-                        writer.flush();
-                        int[] numbers = receiveNumbers(reader);
-                        if (numbers.length != 2) {
-                            throw new Exception("Illegal number of numbers");
-                        }
-                        Operation operation = receiveOperation(reader);
-                        sendResult(writer, operation.operate(numbers[0], numbers[1]));
-                        writer.flush();
-                    } catch (Exception e) {
-                        sendError(writer, e);
-                        writer.flush();
-                    }
-                } catch (Exception e) {
-                    System.out.println("Connection error:");
-                    System.out.println(e.getMessage());
-                }
-                System.out.println("Client disconnected.");
+                processClientConnection(socket);
             }
         } catch (IOException e) {
             System.out.println("Could not start server:");
@@ -55,6 +33,31 @@ public class CalculatorServer {
         }
     }
 
+    private static void processClientConnection(ServerSocket socket) {
+        try (Socket client = socket.accept()) {
+            System.out.printf("Client connection from %s%n", client.getInetAddress().getHostAddress());
+            var reader = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            var writer = new BufferedWriter(new OutputStreamWriter(client.getOutputStream()));
+            try {
+                sendOperations(writer);
+                writer.flush();
+                int[] numbers = receiveNumbers(reader);
+                if (numbers.length != 2) {
+                    throw new Exception("Illegal number of numbers");
+                }
+                Operation operation = receiveOperation(reader);
+                sendResult(writer, operation.operate(numbers[0], numbers[1]));
+                writer.flush();
+            } catch (Exception e) {
+                sendError(writer, e);
+                writer.flush();
+            }
+        } catch (Exception e) {
+            System.out.println("Connection error:");
+            System.out.println(e.getMessage());
+        }
+        System.out.println("Client disconnected.");
+    }
 
     private static void sendOperations(BufferedWriter writer) throws IOException {
         System.out.println("Sending operations...");
