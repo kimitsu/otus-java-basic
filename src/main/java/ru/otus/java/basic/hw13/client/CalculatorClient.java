@@ -29,20 +29,24 @@ public class CalculatorClient {
         Scanner scanner = new Scanner(System.in);
         do {
             System.out.println("Connecting to the server...");
-            try (Socket socket = new Socket(host, port)) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-                receiveOperations(reader);
-                sendNumbers(writer);
-                sendOperation(writer);
-                writer.flush();
-                receiveResult(reader);
-            } catch (Exception e) {
-                System.out.println("Error while communicating with the server:");
-                System.out.println(e.getMessage());
-            }
+            processServerConnection(host, port);
             System.out.print("Disconnected from the server. Connect again? Y/N: ");
         } while (scanner.nextLine().equalsIgnoreCase("y"));
+    }
+
+    private static void processServerConnection(String host, int port) {
+        try (Socket socket = new Socket(host, port)) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            receiveOperations(reader);
+            sendNumbers(writer);
+            sendOperation(writer);
+            writer.flush();
+            receiveResult(reader);
+        } catch (Exception e) {
+            System.out.println("Error while communicating with the server:");
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void receiveOperations(BufferedReader reader) throws IOException, ServerError {
