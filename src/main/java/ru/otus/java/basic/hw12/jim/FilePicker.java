@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class FilePicker {
+    private FilePicker() {
+    }
     /**
      * Prints a list of files and directories contained in a chosen directory
      *
@@ -16,7 +18,8 @@ public class FilePicker {
         String path = root.getAbsolutePath();
         try {
             path = root.getCanonicalPath();
-        } catch (IOException _) {
+        } catch (IOException e) {
+            // Ignore and leave path as is
         }
         System.out.println("Listing files in: " + path);
         if (path.chars()
@@ -31,13 +34,29 @@ public class FilePicker {
             System.out.println("-- No files found --");
             return;
         }
-        Arrays.sort(fileList, (a, b) -> a.isDirectory() ^ b.isDirectory()
-                ? (a.isDirectory() ? -1 : 1)
-                : a.getName().compareTo(b.getName()));
+        Arrays.sort(fileList, FilePicker::compareFiles);
         for (File file : fileList) {
             System.out.println((file.isDirectory() ? "DIR | " : "    | ") + file.getName());
         }
 
+    }
+
+    /**
+     * Compares a and b by name if both a and b are either files or directories,
+     * otherwise considers directories less than files
+     *
+     * @param a file a
+     * @param b file b
+     * @return 1 if a greater than b, 0 if equal, -1 if less
+     */
+    private static int compareFiles(File a, File b) {
+        if (a.isDirectory() && !b.isDirectory()) {
+            return -1;
+        } else if (b.isDirectory() && !a.isDirectory()) {
+            return 1;
+        } else {
+            return a.getName().compareTo(b.getName());
+        }
     }
 
     /**
@@ -83,17 +102,8 @@ public class FilePicker {
                         ? new File(userInput)
                         : new File(root, userInput);
                 if (!file.exists()) {
-                    System.out.println("File does not exist. Attempt to create? Y/N: ");
-                    Scanner scanner = new Scanner(System.in);
-                    if (scanner.nextLine().equalsIgnoreCase("y")) {
-                        try {
-                            if (file.createNewFile()) {
-                                return file;
-                            }
-                        } catch (Exception e) {
-                            System.out.println("Cannot create file. Try again.");
-                        }
-                    }
+                    File newFile = createFile(file);
+                    if (newFile != null) return newFile;
                 } else if (file.isFile()) {
                     if (file.canWrite()) {
                         return file;
@@ -107,6 +117,21 @@ public class FilePicker {
                 System.out.println("Couldn't open file or directory. Try again.");
             }
         } while (path == null);
+        return null;
+    }
+
+    private static File createFile(File file) {
+        System.out.println("File does not exist. Attempt to create? Y/N: ");
+        Scanner scanner = new Scanner(System.in);
+        if (scanner.nextLine().equalsIgnoreCase("y")) {
+            try {
+                if (file.createNewFile()) {
+                    return file;
+                }
+            } catch (Exception e) {
+                System.out.println("Cannot create file. Try again.");
+            }
+        }
         return null;
     }
 }

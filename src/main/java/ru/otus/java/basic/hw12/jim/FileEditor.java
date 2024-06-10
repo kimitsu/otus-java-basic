@@ -5,6 +5,8 @@ import java.nio.charset.Charset;
 import java.util.Scanner;
 
 public class FileEditor {
+    private FileEditor() {
+    }
 
     /**
      * Prints file contents to the console
@@ -57,7 +59,7 @@ public class FileEditor {
         try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file, true))) {
             stream.write(line.getBytes(Charset.defaultCharset()));
             System.out.println("OK.");
-        } catch (IOException _) {
+        } catch (IOException e) {
             System.out.println("Cannot write file! Try again.");
             return false;
         }
@@ -78,6 +80,5 @@ public class FileEditor {
                 return;
             }
         }
-
     }
 }
