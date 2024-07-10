@@ -15,9 +15,13 @@ public class Box<T extends Fruit> {
     /**
      * Adds a fruit to the box
      *
-     * @param fruit
+     * @param fruit a fruit to add
+     * @throws NullPointerException if the fruit is null
      */
     public void add(T fruit) {
+        if (fruit == null) {
+            throw new NullPointerException("fruit must not be null");
+        }
         fruits.add(fruit);
     }
 
