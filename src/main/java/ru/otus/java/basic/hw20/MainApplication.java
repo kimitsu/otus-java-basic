@@ -16,27 +16,22 @@ public class MainApplication {
      * @param args unused
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter the file name: ");
-        String fileName = scanner.nextLine();
-        File file = new File(fileName);
-        if (!file.exists() || !file.canRead()) {
-            System.out.println("Cannot read the file");
-            return;
-        }
-        System.out.print("Enter the text to search: ");
-        char[] textToSearch = scanner.nextLine().toCharArray();
-        if (textToSearch.length == 0) {
-            System.out.println("Text should not be empty");
-            return;
-        }
-
-        try (Reader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
-            readCountOccurrencesAndPrint(reader, textToSearch);
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found");
-        } catch (IOException e) {
-            System.out.println("Cannot read the file");
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.print("Enter the file name: ");
+            String fileName = scanner.nextLine();
+            System.out.print("Enter the text to search: ");
+            char[] textToSearch = scanner.nextLine().toCharArray();
+            if (textToSearch.length == 0) {
+                System.out.println("Text should not be empty");
+                return;
+            }
+            try (Reader reader = new BufferedReader(new FileReader(fileName, StandardCharsets.UTF_8))) {
+                readCountOccurrencesAndPrint(reader, textToSearch);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+            } catch (IOException e) {
+                System.out.println("Cannot read the file");
+            }
         }
     }
 
@@ -110,7 +105,6 @@ public class MainApplication {
      * @return true if matches, false if not
      */
     private static boolean match(char[] chars, char[] matchChars, int start) {
-        assert (chars.length >= matchChars.length + start);
         for (int i = 0; i < matchChars.length; i++) {
             if (chars[i + start] != matchChars[i]) {
                 return false;
