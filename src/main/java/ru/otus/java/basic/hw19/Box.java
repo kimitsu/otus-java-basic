@@ -26,6 +26,19 @@ public class Box<T extends Fruit> {
     }
 
     /**
+     * Adds a list of fruits to the box
+     *
+     * @param fruitsList a list of fruits to add
+     * @throws NullPointerException if the fruit is null
+     */
+    public void add(List<? extends T> fruitsList) {
+        if (fruitsList == null) {
+            throw new NullPointerException("fruitsList must not be null");
+        }
+        fruits.addAll(fruitsList);
+    }
+
+    /**
      * @return the weight of the contents of the box
      */
     private int getWeight() {
@@ -52,9 +65,10 @@ public class Box<T extends Fruit> {
      * @param otherBox a box to dump into
      */
     public void dumpInto(Box<? super T> otherBox) {
-        for (T fruit : fruits) {
-            otherBox.add(fruit);
+        if (otherBox == null || otherBox == this) {
+            throw new IllegalArgumentException("otherBox should not be this or null");
         }
+        otherBox.add(fruits);
         fruits.clear();
     }
 }
