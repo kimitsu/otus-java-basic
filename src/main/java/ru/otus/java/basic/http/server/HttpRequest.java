@@ -12,7 +12,6 @@ public class HttpRequest {
     public HttpRequest(String rawRequest) throws BadRequestException {
         this.rawRequest = rawRequest;
         this.parse();
-
     }
 
     private void parse() throws BadRequestException {
