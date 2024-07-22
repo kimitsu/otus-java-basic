@@ -35,8 +35,8 @@ class IntArrayProcessorTest {
     @Test
     void isArrayContainsOnesAndTwosOnly() {
         Assertions.assertEquals(false, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{}));
-        Assertions.assertEquals(true, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{1}));
-        Assertions.assertEquals(true, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{2}));
+        Assertions.assertEquals(false, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{1}));
+        Assertions.assertEquals(false, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{2, 2}));
         Assertions.assertEquals(true, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{1, 1, 2, 2}));
         Assertions.assertEquals(false, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{1, 1, 3, 2}));
         Assertions.assertEquals(false, IntArrayProcessor.isArrayContainsOnesAndTwosOnly(new int[]{3, 1, 1, 1}));

@@ -21,21 +21,26 @@ public class IntArrayProcessor {
     }
 
     /**
-     * Checks if an array contains ones and twos only and has at least one element.
+     * Checks if an array contains ones and twos only and has at least one of each.
      *
      * @param array an array
-     * @return true if the array contains ones and twos only, false if empty or other numbers present
+     * @return true if the array contains ones and twos only, false if other numbers present
+     * or if a one or a two is missing
      */
     public static boolean isArrayContainsOnesAndTwosOnly(int[] array) {
-        if (array.length == 0) {
-            return false;
-        }
+        boolean isOnePresent = false;
+        boolean isTwoPresent = false;
         for (int i : array) {
             if (i != 1 && i != 2) {
                 return false;
             }
+            if (i == 1) {
+                isOnePresent = true;
+            } else {
+                isTwoPresent = true;
+            }
         }
-        return true;
+        return isOnePresent && isTwoPresent;
     }
 
     private IntArrayProcessor() {
