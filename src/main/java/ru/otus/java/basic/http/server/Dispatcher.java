@@ -17,6 +17,7 @@ public class Dispatcher {
         this.processors.put("/", new HelloWorldRequestProcessor());
         this.processors.put("/bye", new ByeByeWorldRequestProcessor());
         this.processors.put("/calc", new CalculatorRequestProcessor());
+        this.processors.put("/sleep", new SleepRequestProcessor());
     }
 
     public void dispatch(String rawRequest, OutputStream out) throws IOException {
