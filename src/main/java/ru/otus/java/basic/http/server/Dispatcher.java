@@ -1,7 +1,5 @@
 package ru.otus.java.basic.http.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import ru.otus.java.basic.http.server.application.ItemsRepository;
 import ru.otus.java.basic.http.server.processors.*;
 
