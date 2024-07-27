@@ -8,6 +8,7 @@ public class HttpRequest {
     private String uri;
     private HttpMethod method;
     private Map<String, String> parameters;
+    private String body;
 
     public HttpRequest(String rawRequest) throws BadRequestException {
         this.rawRequest = rawRequest;
@@ -42,10 +43,20 @@ public class HttpRequest {
                 this.parameters.put(parts[0], parts[1]);
             }
         }
+        if (method == HttpMethod.POST) {
+            int bodyStart = rawRequest.indexOf("\r\n\r\n");
+            if (bodyStart > -1) {
+                this.body = rawRequest.substring(bodyStart + 4);
+            }
+        }
     }
 
     public String getUri() {
         return uri;
+    }
+
+    public String getBody() {
+        return body;
     }
 
     public String getParameter(String key) {
@@ -62,5 +73,9 @@ public class HttpRequest {
         if (showRawRequest) {
             System.out.println(rawRequest);
         }
+    }
+
+    public String getRoutingKey() {
+        return method.name() + " " + uri;
     }
 }
