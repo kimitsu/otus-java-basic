@@ -1,5 +1,8 @@
 package ru.otus.java.basic.http.server;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.otus.java.basic.http.server.application.ItemsRepository;
 import ru.otus.java.basic.http.server.processors.*;
 
 import java.io.IOException;
@@ -14,10 +17,11 @@ public class Dispatcher {
 
     public Dispatcher() {
         this.defaultNotFoundRequestProcessor = new NotFoundRequestProcessor();
-        this.processors.put("/", new HelloWorldRequestProcessor());
-        this.processors.put("/bye", new ByeByeWorldRequestProcessor());
-        this.processors.put("/calc", new CalculatorRequestProcessor());
-        this.processors.put("/sleep", new SleepRequestProcessor());
+        this.processors.put("GET /", new HelloWorldRequestProcessor());
+        this.processors.put("GET /bye", new ByeByeWorldRequestProcessor());
+        this.processors.put("GET /calc", new CalculatorRequestProcessor());
+        this.processors.put("GET /sleep", new SleepRequestProcessor());
+        this.processors.put("GET /items", new GetItemsProcessor(new ItemsRepository()));
     }
 
     public void dispatch(String rawRequest, OutputStream out) throws IOException {
@@ -28,7 +32,7 @@ public class Dispatcher {
                 defaultNotFoundRequestProcessor.process(request, out);
                 return;
             }
-            processors.get(request.getUri()).process(request, out);
+            processors.get(request.getRoutingKey()).process(request, out);
         } catch (BadRequestException e) {
             e.printStackTrace();
             String response = "" +
