@@ -69,13 +69,13 @@ public class Dispatcher {
                         "HTTP/1.1 500 Internal Server Error\r\n" +
                         "Content-Type: application/json\r\n" +
                         "\r\n" +
-                        new Gson().toJson(new ErrorDTO("BAD_REQUEST", e.getMessage()));
+                        new Gson().toJson(new ErrorDTO("INTERNAL_ERROR", e.getMessage()));
             } else {
                 response = "" +
                         "HTTP/1.1 500 Internal Server Error\r\n" +
                         "Content-Type: text/html\r\n" +
                         "\r\n" +
-                        "<html><body><h1>400 Bad Request</h1><p>" + e.getMessage() + "</p></body></html>";
+                        "<html><body><h1>500 Internal Server Error</h1><p>" + e.getMessage() + "</p></body></html>";
             }
             logger.debug("Sending response:{}{}", System.lineSeparator(), response);
             out.write(response.getBytes(StandardCharsets.UTF_8));
