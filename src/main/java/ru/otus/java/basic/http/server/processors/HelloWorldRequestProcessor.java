@@ -1,5 +1,7 @@
 package ru.otus.java.basic.http.server.processors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.otus.java.basic.http.server.BadRequestException;
 import ru.otus.java.basic.http.server.HttpRequest;
 
@@ -8,6 +10,7 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 public class HelloWorldRequestProcessor implements RequestProcessor {
+    private static final Logger logger = LogManager.getLogger(HelloWorldRequestProcessor.class);
     @Override
     public void process(HttpRequest request, OutputStream out) throws IOException, BadRequestException {
         String response = "" +
@@ -20,7 +23,7 @@ public class HelloWorldRequestProcessor implements RequestProcessor {
                 "irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. " +
                 "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit " +
                 "anim id est laborum.</p></body></html>";
-        System.out.println(response);
+        logger.debug("Sending response:{}{}", System.lineSeparator(), response);
         out.write(response.getBytes(StandardCharsets.UTF_8));
     }
 }
