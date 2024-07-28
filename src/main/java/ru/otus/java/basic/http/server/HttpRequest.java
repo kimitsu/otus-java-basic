@@ -113,7 +113,6 @@ public class HttpRequest {
         return !containsHeader("Accept")
                 || getHeader("Accept").contains("*/*")
                 || getHeader("Accept").contains(mime); // TODO Correct parsing and wildcard matching
-
     }
 
     public String getHeader(String headerKey) {
