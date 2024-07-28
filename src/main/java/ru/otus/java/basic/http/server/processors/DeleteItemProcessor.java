@@ -22,9 +22,6 @@ public class DeleteItemProcessor implements RequestProcessor {
 
     @Override
     public void process(HttpRequest request, HttpContext context, OutputStream out) throws IOException, BadRequestException, NotAcceptableException {
-        if (!request.accepts("application/json")) {
-            throw new NotAcceptableException("application/json");
-        }
         if (!request.containsParameter("id")) {
             throw new BadRequestException("Item id is not specified");
         }
