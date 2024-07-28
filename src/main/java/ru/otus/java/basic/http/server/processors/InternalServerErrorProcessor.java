@@ -12,25 +12,25 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
-public class NotFoundRequestProcessor implements RequestProcessor {
-    private static final Logger logger = LogManager.getLogger(NotFoundRequestProcessor.class);
+public class InternalServerErrorProcessor implements RequestProcessor {
+    private static final Logger logger = LogManager.getLogger(InternalServerErrorProcessor.class);
 
     @Override
     public void process(HttpRequest request, HttpContext context, OutputStream out) throws IOException, BadRequestException {
-        logger.warn("Processor for method/uri not found");
+        logger.error("Internal server error", context.getException());
         String response;
         if (request != null && request.accepts("application/json")) {
             response = "" +
-                    "HTTP/1.1 404 Not Found\r\n" +
+                    "HTTP/1.1 500 Internal Server Error\r\n" +
                     "Content-Type: application/json\r\n" +
                     "\r\n" +
-                    new Gson().toJson(new ErrorDTO("NOT_FOUND", "Invalid endpoint"));
+                    new Gson().toJson(new ErrorDTO("INTERNAL_ERROR", context.getException().getMessage()));
         } else {
             response = "" +
-                    "HTTP/1.1 404 Not Found\r\n" +
+                    "HTTP/1.1 500 Internal Server Error\r\n" +
                     "Content-Type: text/html\r\n" +
                     "\r\n" +
-                    "<html><body><h1>404 Not Found</h1></body></html>";
+                    "<html><body><h1>500 Internal Server Error</h1><p>" + context.getException().getMessage() + "</p></body></html>";
         }
         logger.debug("Sending response:{}{}", System.lineSeparator(), response);
         out.write(response.getBytes(StandardCharsets.UTF_8));

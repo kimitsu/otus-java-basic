@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.otus.java.basic.http.server.BadRequestException;
+import ru.otus.java.basic.http.server.exceptions.BadRequestException;
+import ru.otus.java.basic.http.server.HttpContext;
 import ru.otus.java.basic.http.server.HttpRequest;
+import ru.otus.java.basic.http.server.exceptions.NotAcceptableException;
 import ru.otus.java.basic.http.server.application.Item;
 import ru.otus.java.basic.http.server.application.ItemsRepository;
 
@@ -22,7 +24,10 @@ public class CreateItemProcessor implements RequestProcessor {
     }
 
     @Override
-    public void process(HttpRequest request, OutputStream out) throws IOException, BadRequestException {
+    public void process(HttpRequest request, HttpContext context, OutputStream out) throws IOException, BadRequestException, NotAcceptableException {
+        if (!request.accepts("application/json")) {
+            throw new NotAcceptableException("application/json");
+        }
         Gson gson = new Gson();
         try {
             Item item = gson.fromJson(request.getBody(), Item.class);

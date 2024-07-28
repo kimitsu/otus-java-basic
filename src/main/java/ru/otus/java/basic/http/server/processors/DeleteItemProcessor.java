@@ -2,8 +2,10 @@ package ru.otus.java.basic.http.server.processors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.otus.java.basic.http.server.BadRequestException;
+import ru.otus.java.basic.http.server.exceptions.BadRequestException;
+import ru.otus.java.basic.http.server.HttpContext;
 import ru.otus.java.basic.http.server.HttpRequest;
+import ru.otus.java.basic.http.server.exceptions.NotAcceptableException;
 import ru.otus.java.basic.http.server.application.ItemsRepository;
 
 import java.io.IOException;
@@ -19,7 +21,10 @@ public class DeleteItemProcessor implements RequestProcessor {
     }
 
     @Override
-    public void process(HttpRequest request, OutputStream out) throws IOException, BadRequestException {
+    public void process(HttpRequest request, HttpContext context, OutputStream out) throws IOException, BadRequestException, NotAcceptableException {
+        if (!request.accepts("application/json")) {
+            throw new NotAcceptableException("application/json");
+        }
         if (!request.containsParameter("id")) {
             throw new BadRequestException("Item id is not specified");
         }

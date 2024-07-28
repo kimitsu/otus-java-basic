@@ -2,8 +2,10 @@ package ru.otus.java.basic.http.server.processors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import ru.otus.java.basic.http.server.BadRequestException;
+import ru.otus.java.basic.http.server.exceptions.BadRequestException;
+import ru.otus.java.basic.http.server.HttpContext;
 import ru.otus.java.basic.http.server.HttpRequest;
+import ru.otus.java.basic.http.server.exceptions.NotAcceptableException;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -13,7 +15,10 @@ public class CalculatorRequestProcessor implements RequestProcessor {
     private static final Logger logger = LogManager.getLogger(CalculatorRequestProcessor.class);
 
     @Override
-    public void process(HttpRequest request, OutputStream out) throws IOException, BadRequestException {
+    public void process(HttpRequest request, HttpContext context, OutputStream out) throws IOException, BadRequestException, NotAcceptableException {
+        if (!request.accepts("text/html")) {
+            throw new NotAcceptableException("text/html");
+        }
         if (!request.containsParameter("a")) {
             throw new BadRequestException("Parameter 'a' is missing");
         }

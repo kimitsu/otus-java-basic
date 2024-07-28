@@ -2,6 +2,7 @@ package ru.otus.java.basic.http.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import ru.otus.java.basic.http.server.exceptions.BadRequestException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -106,6 +107,13 @@ public class HttpRequest {
             logger.trace("Parameter {} = {}", parts[0], parts[1]);
             parameters.put(parts[0], parts[1]);
         }
+    }
+
+    public boolean accepts(String mime) {
+        return !containsHeader("Accept")
+                || getHeader("Accept").contains("*/*")
+                || getHeader("Accept").contains(mime); // TODO Correct parsing and wildcard matching
+
     }
 
     public String getHeader(String headerKey) {
