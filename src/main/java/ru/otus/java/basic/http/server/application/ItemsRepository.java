@@ -1,29 +1,44 @@
 package ru.otus.java.basic.http.server.application;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.otus.java.basic.http.server.processors.ByeByeWorldRequestProcessor;
+
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class ItemsRepository {
-    private List<Item> items;
+    private static final Logger logger = LogManager.getLogger(ItemsRepository.class);
+    private HashMap<Long, Item> items;
 
     public ItemsRepository() {
-        this.items = new ArrayList<>(Arrays.asList(
-                new Item(1L, "Milk", BigDecimal.valueOf(81)),
-                new Item(2L, "Bread", BigDecimal.valueOf(32)),
-                new Item(3L, "Cheese", BigDecimal.valueOf(321))
-        ));
+        this.items = new HashMap<>();
+        this.items.put(1L, new Item(1L, "Milk", BigDecimal.valueOf(81)));
+        this.items.put(2L, new Item(2L, "Bread", BigDecimal.valueOf(32)));
+        this.items.put(3L, new Item(3L, "Cheese", BigDecimal.valueOf(321)));
+        logger.trace("Item repository created");
     }
 
-    public List<Item> getItems() {
-        return items;
+    public Collection<Item> getItems() {
+        return items.values();
     }
 
-    public Item add(Item item) {
-        Long newId = items.stream().mapToLong(Item::getId).max().orElse(0L) + 1L;
+    public boolean containsItem(Long id) {
+        return items.containsKey(id);
+    }
+
+    public synchronized boolean deleteItem(Long id) {
+        if (!containsItem(id)) return false;
+        items.remove(id);
+        logger.debug("Removed item with id = {}", id);
+        return true;
+    }
+
+    public synchronized Item add(Item item) {
+        Long newId = items.keySet().stream().max(Long::compareTo).map((value) -> value + 1L).orElse(1L);
         item.setId(newId);
-        items.add(item);
+        items.put(newId, item);
+        logger.debug("Added item with id = {}", newId);
         return item;
     }
 }

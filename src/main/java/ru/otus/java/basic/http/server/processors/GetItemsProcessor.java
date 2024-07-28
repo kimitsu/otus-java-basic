@@ -1,17 +1,22 @@
 package ru.otus.java.basic.http.server.processors;
 
 import com.google.gson.Gson;
-import ru.otus.java.basic.http.server.BadRequestException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import ru.otus.java.basic.http.server.exceptions.BadRequestException;
+import ru.otus.java.basic.http.server.HttpContext;
 import ru.otus.java.basic.http.server.HttpRequest;
+import ru.otus.java.basic.http.server.exceptions.NotAcceptableException;
 import ru.otus.java.basic.http.server.application.Item;
 import ru.otus.java.basic.http.server.application.ItemsRepository;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Collection;
 
 public class GetItemsProcessor implements RequestProcessor {
+    private static final Logger logger = LogManager.getLogger(GetItemsProcessor.class);
     private ItemsRepository itemsRepository;
 
     public GetItemsProcessor(ItemsRepository itemsRepository) {
@@ -19,8 +24,11 @@ public class GetItemsProcessor implements RequestProcessor {
     }
 
     @Override
-    public void process(HttpRequest request, OutputStream out) throws IOException, BadRequestException {
-        List<Item> items = itemsRepository.getItems();
+    public void process(HttpRequest request, HttpContext context, OutputStream out) throws IOException, BadRequestException, NotAcceptableException {
+        if (!request.accepts("application/json")) {
+            throw new NotAcceptableException("application/json");
+        }
+        Collection<Item> items = itemsRepository.getItems();
         Gson gson = new Gson();
         String itemsJson = gson.toJson(items);
         String response = "" +
@@ -28,6 +36,7 @@ public class GetItemsProcessor implements RequestProcessor {
                 "Content-type: application/json\r\n" +
                 "\r\n" +
                 itemsJson;
+        logger.debug("Sending response:{}{}", System.lineSeparator(), response);
         out.write(response.getBytes(StandardCharsets.UTF_8));
     }
 }
